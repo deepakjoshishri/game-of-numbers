@@ -1,17 +1,29 @@
 import React, { useState } from 'react';
+import Game from './Game';
 
-export function App({ initialData }) {
-  const [count, setCount] = useState(0);
+const GameLevels = () => {
+  const [level, setLevel] = useState(1);
   return (
-    <div>
-      <h1>{initialData.appName}</h1>
-      This is a sample stateful and server-side rendered React application.
-      <br />
-      <br />
-      Here is a button that will track how many times you click it:
-      <br />
-      <br />
-      <button onClick={() => setCount(count + 1)}>{count}</button>
-    </div>
+    <StarMatch
+      key={level}
+      startNextLevel={() => setLevel(level + 1)}
+      level={level}
+    />
   );
+};
+
+const StarMatch = props => {
+  const [gameId, setGameId] = useState(0);
+  return (
+    <Game
+      key={gameId}
+      startNewGame={() => setGameId(gameId + 1)}
+      level={props.level}
+      startNextLevel={props.startNextLevel}
+    />
+  );
+};
+
+export function App() {
+  return <GameLevels />;
 }
